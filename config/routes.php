@@ -35,6 +35,8 @@ use Psr\Container\ContainerInterface;
  */
 
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
+    $app->get('/test', App\Handler\TestPageHandler::class, 'test');
+    
     // Application routes
     (new App\ConfigProvider())->registerRoutes($app, '/');
 

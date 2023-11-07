@@ -23,6 +23,7 @@ trait RoutesTrait
         'blog.tag'           => '/blog/tag/{tag:[^/]+}',
         'blog.feed'          => '/blog/{type:atom|rss}.xml',
         'contact'            => '/contact[/]',
+        'test'               => '/test',
         'home'               => '/',
         'resume'             => '/resume',
     ];
