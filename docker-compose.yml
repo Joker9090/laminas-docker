@@ -11,7 +11,7 @@ services:
       - .:/var/www
       - ./.docker/php/getlaminas.ini:/usr/local/etc/php/conf.d/999-getlaminas.ini
       - ./.docker/php/php-entrypoint:/usr/local/bin/php-entrypoint
-  
+    command: bash -c "composer update && composer install && chmod -R 777 . && php-fpm"
   nginx:
     build: .docker/nginx/
     depends_on:

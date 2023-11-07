@@ -16,19 +16,20 @@ RUN mkdir -p /assets && mv /work/build/* /assets
 FROM php:8.2-fpm-alpine
 
 # System dependencies
-# RUN mkdir -p /etc/apk && echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
+RUN mkdir -p /etc/apk && echo 'http://dl-cdn.alpinelinux.org/alpine/v3.16/community' >> /etc/apk/repositories
 RUN apk update && \
   apk add --no-cache \
     bash \
     php8-bcmath \
     php8-bz2 \
     php8-dom \
-    php8-intl \
+#    php8-intl \
     php8-opcache \
     php8-pcntl \
     php8-sockets \
     php8-xsl \
-    php8-zip
+    php8-zip \
+    composer
 
 # PHP configuration
 COPY .docker/php/getlaminas.ini /usr/local/etc/php/conf.d/999-getlaminas.ini
@@ -43,5 +44,13 @@ COPY --from=assets /assets/js /assets/js/
 
 # Build project
 WORKDIR /var/www
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# RUN composer update
+# RUN composer install
+
+
 ENTRYPOINT ["php-entrypoint"]
 CMD ["php-fpm"]
